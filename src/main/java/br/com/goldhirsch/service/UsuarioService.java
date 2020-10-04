@@ -3,6 +3,8 @@ package br.com.goldhirsch.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.goldhirsch.exception.BadCredentialsException;
+import br.com.goldhirsch.exception.EmailNotFoundException;
 import br.com.goldhirsch.exception.UsuarioException;
 import br.com.goldhirsch.model.Usuario;
 import br.com.goldhirsch.repository.UsuarioRepository;
@@ -19,6 +21,17 @@ public class UsuarioService {
 			throw new UsuarioException(usuario.getEmail());
 		}
 		return repository.save(usuario);
+		
+		
+	}
+	
+	public Usuario getUsuario(String email) {
+		Usuario usuario = repository.findByEmail(email).orElseThrow(() -> new EmailNotFoundException(email));
+		if(!email.equals(usuario.getEmail())) {
+			throw new BadCredentialsException(email); 
+		}
+		
+		return usuario;
 		
 		
 	}
