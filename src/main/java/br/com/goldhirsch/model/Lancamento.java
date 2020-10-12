@@ -21,16 +21,34 @@ import br.com.goldhirsch.enums.TipoLancamento;
 @Entity
 public class Lancamento {
 
+	public Lancamento() {
+
+	}
+
+	public Lancamento(Integer id, String descricao, Integer mes, Integer ano, Usuario usuario, BigDecimal valor,
+			LocalDate dataCadastro, TipoLancamento tipo) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.mes = mes;
+		this.ano = ano;
+		this.usuario = usuario;
+		this.valor = valor;
+		this.dataCadastro = dataCadastro;
+		this.tipo = tipo;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private Long id;
+	private Integer id;
 
 	@Column(name = "descricao")
-	private String Descricao;
+	private String descricao;
 
 	@Column(name = "mes")
 	private Integer mes;
+
 	@Column(name = "ano")
 	private Integer ano;
 
@@ -49,20 +67,20 @@ public class Lancamento {
 	@Enumerated(value = EnumType.STRING)
 	private TipoLancamento tipo;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 	public String getDescricao() {
-		return Descricao;
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
-		Descricao = descricao;
+		this.descricao = descricao;
 	}
 
 	public Integer getMes() {

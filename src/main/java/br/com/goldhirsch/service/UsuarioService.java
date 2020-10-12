@@ -1,5 +1,7 @@
 package br.com.goldhirsch.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,11 +31,13 @@ public class UsuarioService {
 		Usuario usuario = repository.findByEmail(email).orElseThrow(() -> new EmailNotFoundException(email));
 		if(!email.equals(usuario.getEmail())) {
 			throw new BadCredentialsException(email); 
-		}
-		
+		}		
 		return usuario;
 		
-		
+	}
+	
+	public Optional<Usuario> getUsuarioById(Integer id) {
+		return repository.findById(id);
 	}
 
 }

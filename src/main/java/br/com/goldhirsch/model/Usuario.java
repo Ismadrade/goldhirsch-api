@@ -10,18 +10,31 @@ public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Integer id;
 
 	private String nome;
 	private String sobrenome;
 	private String email;
 	private String senha;
+	
+	public Usuario() {
+		
+	}
 
-	public Long getId() {
+	public Usuario(Integer id, String nome, String sobrenome, String email, String senha) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.email = email;
+		this.senha = senha;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
