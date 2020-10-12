@@ -1,15 +1,14 @@
 package br.com.goldhirsch.controller;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.goldhirsch.dto.LancamentoDTO;
 import br.com.goldhirsch.enums.TipoLancamento;
@@ -40,6 +39,19 @@ public class LancamentoController {
 		} catch (LancamentoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+
+	@GetMapping
+	public ResponseEntity buscarLancamento(@RequestParam("usuario") Integer idUsuario){
+		Lancamento lancamentoFiltro = new Lancamento();
+		Optional<Usuario> usuario = usuarioService.getUsuarioById(idUsuario);
+		if(!usuario.isPresent()) {
+			return ResponseEntity.badRequest().body("Não foi possível realiza a consulta. Usuario não encontrado para o id informado.");
+		}else {
+			lancamentoFiltro.setUsuario(usuario.get());
+		}
+		List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
+		return ResponseEntity.ok(lancamentos);
 	}
 	
 	private Lancamento converterDTO(LancamentoDTO dto) {
