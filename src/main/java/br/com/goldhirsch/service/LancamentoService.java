@@ -30,4 +30,14 @@ public class LancamentoService {
 				.withStringMatcher(StringMatcher.CONTAINING) );
 		return repository.findAll(example);
 	}
+
+	@Transactional
+	public void excluirLancamento( Integer id){
+		repository
+				.findById(id)
+				.map( lancamento -> {
+					repository.delete(lancamento);
+					return Void.TYPE;
+				});
+	}
 }

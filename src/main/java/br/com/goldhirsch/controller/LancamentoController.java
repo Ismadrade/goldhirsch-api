@@ -53,6 +53,16 @@ public class LancamentoController {
 		List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
 		return ResponseEntity.ok(lancamentos);
 	}
+
+	@DeleteMapping("{id}")
+	public ResponseEntity excluirLancamento(@PathVariable("id") Integer id){
+		try{
+			service.excluirLancamento(id);
+			return ResponseEntity.ok().build();
+		}catch (LancamentoException e){
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 	
 	private Lancamento converterDTO(LancamentoDTO dto) {
 		Lancamento lancamento = new Lancamento();
