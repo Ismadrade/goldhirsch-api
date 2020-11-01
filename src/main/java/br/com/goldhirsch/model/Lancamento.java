@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import br.com.goldhirsch.enums.TipoLancamento;
@@ -60,7 +61,7 @@ public class Lancamento {
 	private BigDecimal valor;
 
 	@Column(name = "data_cadastro")
-	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCadastro;
 
 	@Column(name = "tipo")
