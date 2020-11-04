@@ -64,6 +64,17 @@ public class LancamentoController {
 		}
 	}
 	
+	@PutMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public ResponseEntity atualizar( @PathVariable("id") Integer id, @RequestBody Lancamento lancamento) {
+		try {
+			service.editarLancamento(id, lancamento);
+			return ResponseEntity.ok(lancamento);
+		}catch (LancamentoException e){
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+	
 	private Lancamento converterDTO(LancamentoDTO dto) {
 		Lancamento lancamento = new Lancamento();
 		lancamento.setDescricao(dto.getDescricao());

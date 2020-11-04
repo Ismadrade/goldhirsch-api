@@ -40,4 +40,12 @@ public class LancamentoService {
 					return Void.TYPE;
 				});
 	}
+
+	@Transactional
+	public void editarLancamento( Integer id, Lancamento lancamento){
+		repository.findById(id).map( lanc -> {
+			lancamento.setId(lanc.getId());
+			return repository.save(lancamento);
+		});
+	}
 }
