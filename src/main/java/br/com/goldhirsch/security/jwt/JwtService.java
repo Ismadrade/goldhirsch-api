@@ -9,6 +9,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -25,23 +26,24 @@ public class JwtService {
     @Value("${security.jwt.chave-assinatura}")
     private String chaveAssinatura;
 
-    @Autowired
-    UsuarioRepository repository;
 
-    public String gerarToken(Usuario usuario){
+    public String gerarToken(Authentication authentication){
+
+        Usuario usuarioLogado = (Usuario) authentication.getPrincipal();
 
         long expString = Long.valueOf(expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
         Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
         Date data = Date.from(instant);
-        Usuario user = repository.findByEmail(usuario.getEmail()).orElseThrow(() -> new EmailNotFoundException(usuario.getEmail()));
+
         return Jwts
                 .builder()
-                .setSubject(usuario.getEmail())
+                .setIssuer("API Goldhirsch")
+                .setSubject(usuarioLogado.getEmail())
                 .setExpiration(data)
                 .signWith( SignatureAlgorithm.HS512, chaveAssinatura )
-                .claim("nome", user.getNome())
-                .claim("sobrenome", user.getSobrenome())
+                .claim("nome", usuarioLogado.getNome())
+                .claim("sobrenome", usuarioLogado.getSobrenome())
                 .compact();
     }
 

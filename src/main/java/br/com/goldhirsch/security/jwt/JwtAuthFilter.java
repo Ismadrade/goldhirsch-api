@@ -1,5 +1,6 @@
 package br.com.goldhirsch.security.jwt;
 
+import br.com.goldhirsch.model.Usuario;
 import br.com.goldhirsch.service.UsuarioServiceImpl;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,7 +26,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        logger.info("Logging Request  {} : {} " + request.getMethod()+ " - "+ request.getServletPath());
+        logger.info("Logging Response :{} "+ request.getContentType());
         String authorization = request.getHeader("Authorization");
 
         if(authorization != null && authorization.startsWith("Bearer")){
@@ -34,10 +36,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if(isValid){
                 String emailUsuario = jwtService.obterEmail(token);
-                UserDetails usuario = usuarioService.loadUserByUsername(emailUsuario);
-                UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-                user.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(user);
+                Usuario usuario = usuarioService.getUsuario(emailUsuario);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
 
         }
