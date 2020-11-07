@@ -1,6 +1,12 @@
 package br.com.goldhirsch.controller;
 
+import br.com.goldhirsch.exception.BadCredentialsException;
+import br.com.goldhirsch.security.jwt.JwtService;
+import br.com.goldhirsch.service.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,27 +27,36 @@ import br.com.goldhirsch.service.UsuarioService;
 public class UsuarioController {
 	
 	@Autowired
-	private UsuarioService service;
+	private UsuarioServiceImpl service;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JwtService jwtService;
+
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarUsuario(@RequestBody Usuario usuario) {
-		try {
-			service.salvarUsuario(usuario);
-			
-		}catch (UsuarioException e) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-		}
+		String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+		usuario.setSenha(senhaCriptografada);
+		service.salvarUsuario(usuario);
 	}
 	
 	@PostMapping("/logar")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity consultaUsuario(@RequestParam String email) {
+	public ResponseEntity consultaUsuario(@RequestParam String email, String senha) {
 		try {
-			Usuario usuario = service.getUsuario(email);
-			return ResponseEntity.ok(usuario);
+			Usuario usuario = new Usuario();
+			usuario.setEmail(email);
+			usuario.setSenha(senha);
+			UserDetails usuarioAutenticado = service.autenticar(usuario);
+			String token = jwtService.gerarToken(usuario);
+			System.out.println(token);
+			return ResponseEntity.ok(usuarioAutenticado);
 			
-		}catch (UsuarioException e) {
+		}catch (UsernameNotFoundException | BadCredentialsException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
