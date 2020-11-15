@@ -2,6 +2,7 @@ package br.com.goldhirsch.controller;
 
 import br.com.goldhirsch.dto.LoginFormRequest;
 import br.com.goldhirsch.exception.BadCredentialsException;
+import br.com.goldhirsch.response.AuthenticationResponse;
 import br.com.goldhirsch.security.jwt.JwtService;
 import br.com.goldhirsch.service.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +60,10 @@ public class UsuarioController {
 			service.autenticar(form);
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = jwtService.gerarToken(authentication);
-
-			return ResponseEntity.ok(token);
+			AuthenticationResponse response = new AuthenticationResponse();
+			response.setToken(token);
+			response.setUsuario((Usuario)authentication.getPrincipal());
+			return ResponseEntity.ok(response);
 			
 		}catch (UsernameNotFoundException | BadCredentialsException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());

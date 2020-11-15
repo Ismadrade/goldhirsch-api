@@ -3,16 +3,15 @@ package br.com.goldhirsch.dto;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 public class LoginFormRequest {
-    private String login;
+    private String email;
     private String senha;
 
-
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
@@ -24,7 +23,7 @@ public class LoginFormRequest {
     }
 
     public UsernamePasswordAuthenticationToken converter() {
-        return new UsernamePasswordAuthenticationToken(login, senha);
+        return new UsernamePasswordAuthenticationToken(email, senha);
     }
 
 

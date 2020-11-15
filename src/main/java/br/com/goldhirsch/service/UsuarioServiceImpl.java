@@ -32,10 +32,10 @@ public class UsuarioServiceImpl implements UserDetailsService {
     }
 
     public void autenticar(LoginFormRequest form){
-        UserDetails user = loadUserByUsername(form.getLogin());
+        UserDetails user = loadUserByUsername(form.getEmail());
         boolean senhasBatem = encoder.matches(form.getSenha(), user.getPassword());
         if(!senhasBatem){
-            throw new BadCredentialsException(form.getLogin());
+            throw new BadCredentialsException(form.getEmail());
         }
     }
 
