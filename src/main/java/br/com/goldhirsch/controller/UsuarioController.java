@@ -1,6 +1,7 @@
 package br.com.goldhirsch.controller;
 
-import br.com.goldhirsch.dto.LoginFormRequest;
+import br.com.goldhirsch.adapter.AdapterDTO;
+import br.com.goldhirsch.request.LoginFormRequest;
 import br.com.goldhirsch.exception.BadCredentialsException;
 import br.com.goldhirsch.response.AuthenticationResponse;
 import br.com.goldhirsch.security.jwt.JwtService;
@@ -42,6 +43,9 @@ public class UsuarioController {
 	@Autowired
 	AuthenticationManager authManager;
 
+	@Autowired
+	private AdapterDTO<Usuario, AuthenticationResponse, LoginFormRequest> adapter;
+
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -60,9 +64,8 @@ public class UsuarioController {
 			service.autenticar(form);
 			Authentication authentication = authManager.authenticate(dadosLogin);
 			String token = jwtService.gerarToken(authentication);
-			AuthenticationResponse response = new AuthenticationResponse();
+			AuthenticationResponse response = adapter.toResponse((Usuario)authentication.getPrincipal());
 			response.setToken(token);
-			response.setUsuario((Usuario)authentication.getPrincipal());
 			return ResponseEntity.ok(response);
 			
 		}catch (UsernameNotFoundException | BadCredentialsException e) {

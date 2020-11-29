@@ -1,4 +1,4 @@
-package br.com.goldhirsch.dto;
+package br.com.goldhirsch.request;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
