@@ -1,17 +1,17 @@
 package br.com.goldhirsch.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.goldhirsch.adapter.AdapterDTO;
+import br.com.goldhirsch.request.LancamentoRequest;
+import br.com.goldhirsch.response.LancamentoResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.goldhirsch.dto.LancamentoDTO;
-import br.com.goldhirsch.enums.TipoLancamento;
 import br.com.goldhirsch.exception.LancamentoException;
 import br.com.goldhirsch.model.Lancamento;
 import br.com.goldhirsch.model.Usuario;
@@ -27,15 +27,17 @@ public class LancamentoController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@Autowired
+	private AdapterDTO<Lancamento, LancamentoResponse, LancamentoRequest> adapter;
 	
 	@PostMapping("/inserir-lancamento")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity inserirLancamento(@RequestBody LancamentoDTO dto) {
+	public ResponseEntity inserirLancamento(@RequestBody LancamentoRequest dto) {
 		try {
-			Lancamento lancamento = converterDTO(dto);
+			Lancamento lancamento = adapter.ToEntity(dto);
 			lancamento = service.inserirLancamento(lancamento);
-			return ResponseEntity.ok(lancamento);
-			
+			return ResponseEntity.ok(adapter.toResponse(lancamento));
 		} catch (LancamentoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -73,21 +75,6 @@ public class LancamentoController {
 		}catch (LancamentoException e){
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-	}
-	
-	private Lancamento converterDTO(LancamentoDTO dto) {
-		Lancamento lancamento = new Lancamento();
-		lancamento.setDescricao(dto.getDescricao());
-		lancamento.setMes(dto.getMes());
-		lancamento.setAno(dto.getAno());
-		lancamento.setValor(dto.getValor());		
-		Usuario usuario = usuarioService
-				.getUsuarioById(dto.getUsuario())
-				.orElseThrow(() -> new LancamentoException("Usuário não encontrado para o id informado"));		
-		lancamento.setUsuario(usuario);
-		lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
-		lancamento.setDataCadastro(LocalDate.now());
-		return lancamento;
 	}
 
 }
