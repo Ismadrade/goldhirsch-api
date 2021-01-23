@@ -44,6 +44,7 @@ public class JwtService {
                 .signWith( SignatureAlgorithm.HS512, chaveAssinatura )
                 .claim("nome", usuarioLogado.getNome())
                 .claim("sobrenome", usuarioLogado.getSobrenome())
+                .claim("idUsuario", usuarioLogado.getId())
                 .compact();
     }
 
