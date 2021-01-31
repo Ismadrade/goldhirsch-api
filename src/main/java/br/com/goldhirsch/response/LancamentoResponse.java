@@ -12,7 +12,7 @@ public class LancamentoResponse {
     private String descricao;
     private Calendario calendario;
     private Integer ano;
-    private Usuario usuario;
+    private Integer usuario;
     private BigDecimal valor;
     private LocalDate dataCadastro;
     private TipoLancamento tipo;
@@ -49,11 +49,11 @@ public class LancamentoResponse {
         this.ano = ano;
     }
 
-    public Usuario getUsuario() {
+    public Integer getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(Integer usuario) {
         this.usuario = usuario;
     }
 

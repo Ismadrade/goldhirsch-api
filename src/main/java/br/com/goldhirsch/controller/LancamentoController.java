@@ -36,8 +36,7 @@ public class LancamentoController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity inserirLancamento(@RequestBody LancamentoRequest dto) {
 		try {
-			Lancamento lancamento = adapter.ToEntity(dto);
-			lancamento = service.inserirLancamento(lancamento);
+			Lancamento lancamento = service.inserirLancamento(adapter.ToEntity(dto));
 			return ResponseEntity.ok(adapter.toResponse(lancamento));
 		} catch (LancamentoException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,10 +71,10 @@ public class LancamentoController {
 	
 	@PutMapping("{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public ResponseEntity atualizar( @PathVariable("id") Integer id, @RequestBody Lancamento lancamento) {
+	public ResponseEntity atualizar( @PathVariable("id") Integer id, @RequestBody LancamentoRequest lancamento) {
 		try {
-			service.editarLancamento(id, lancamento);
-			return ResponseEntity.ok(lancamento);
+			service.editarLancamento(id, adapter.ToEntity(lancamento));
+			return ResponseEntity.ok().build();
 		}catch (LancamentoException e){
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

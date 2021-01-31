@@ -23,12 +23,12 @@ public class LancamentoAdapterDTOImpl implements AdapterDTO<Lancamento, Lancamen
     public Lancamento ToEntity(LancamentoRequest request) {
         Lancamento lancamento = new Lancamento();
         lancamento.setDescricao(request.getDescricao());
-        lancamento.setMes(request.getMes());
+        lancamento.setMes(request.getCalendario().ordinal());
         lancamento.setAno(request.getAno());
         lancamento.setValor(request.getValor());
         Usuario usuario = usuarioService
                 .getUsuarioById(request.getUsuario())
-                .orElseThrow(() -> new LancamentoException("Usuário não encontrado para o id informado"));;
+                .orElseThrow(() -> new LancamentoException("Usuário não encontrado para o id informado"));
         lancamento.setUsuario(usuario);
         lancamento.setTipo(TipoLancamento.valueOf(request.getTipo()));
         lancamento.setDataCadastro(LocalDate.now());
@@ -43,7 +43,7 @@ public class LancamentoAdapterDTOImpl implements AdapterDTO<Lancamento, Lancamen
         response.setDataCadastro(model.getDataCadastro());
         response.setCalendario(Calendario.values()[model.getMes()]);
         response.setAno(model.getAno());
-        response.setUsuario(model.getUsuario());
+        response.setUsuario(model.getUsuario().getId());
         response.setValor(model.getValor());
         response.setTipo(model.getTipo());
         return response;
