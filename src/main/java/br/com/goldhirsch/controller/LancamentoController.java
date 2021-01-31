@@ -1,5 +1,6 @@
 package br.com.goldhirsch.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,10 @@ public class LancamentoController {
 			lancamentoFiltro.setUsuario(usuario.get());
 		}
 		List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
-		return ResponseEntity.ok(lancamentos);
+		List<LancamentoResponse> response = new ArrayList<>();
+		lancamentos.stream()
+				.forEach(entidade -> response.add(adapter.toResponse(entidade)));
+		return ResponseEntity.ok(response);
 	}
 
 	@DeleteMapping("{id}")

@@ -1,5 +1,6 @@
 package br.com.goldhirsch.response;
 
+import br.com.goldhirsch.enums.Calendario;
 import br.com.goldhirsch.enums.TipoLancamento;
 import br.com.goldhirsch.model.Usuario;
 
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 public class LancamentoResponse {
     private Integer id;
     private String descricao;
-    private Integer mes;
+    private Calendario calendario;
     private Integer ano;
     private Usuario usuario;
     private BigDecimal valor;
@@ -32,12 +33,12 @@ public class LancamentoResponse {
         this.descricao = descricao;
     }
 
-    public Integer getMes() {
-        return mes;
+    public Calendario getCalendario() {
+        return calendario;
     }
 
-    public void setMes(Integer mes) {
-        this.mes = mes;
+    public void setCalendario(Calendario calendario) {
+        this.calendario = calendario;
     }
 
     public Integer getAno() {

@@ -1,5 +1,6 @@
 package br.com.goldhirsch.adapter;
 
+import br.com.goldhirsch.enums.Calendario;
 import br.com.goldhirsch.enums.TipoLancamento;
 import br.com.goldhirsch.exception.LancamentoException;
 import br.com.goldhirsch.model.Lancamento;
@@ -40,7 +41,7 @@ public class LancamentoAdapterDTOImpl implements AdapterDTO<Lancamento, Lancamen
         response.setId(model.getId());
         response.setDescricao(model.getDescricao());
         response.setDataCadastro(model.getDataCadastro());
-        response.setMes(model.getMes());
+        response.setCalendario(Calendario.values()[model.getMes()]);
         response.setAno(model.getAno());
         response.setUsuario(model.getUsuario());
         response.setValor(model.getValor());
