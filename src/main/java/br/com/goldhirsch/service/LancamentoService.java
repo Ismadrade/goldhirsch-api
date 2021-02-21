@@ -1,6 +1,9 @@
 package br.com.goldhirsch.service;
 
+import br.com.goldhirsch.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Example;
@@ -24,11 +27,10 @@ public class LancamentoService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
-		Example example = Example.of(lancamentoFiltro, ExampleMatcher.matching()
-				.withIgnoreCase()
-				.withStringMatcher(StringMatcher.CONTAINING) );
-		return repository.findAll(example);
+	public List<Lancamento> buscar() {
+		Authentication usuarioAutenticado = SecurityContextHolder.getContext().getAuthentication();
+		Usuario usuario = (Usuario) usuarioAutenticado.getPrincipal();
+		return repository.findAllByUsuario(usuario);
 	}
 
 	@Transactional

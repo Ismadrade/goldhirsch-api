@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class LancamentoAdapterDTOImpl implements AdapterDTO<Lancamento, LancamentoResponse, LancamentoRequest> {
+public class LancamentoAdapterImpl implements Adapter<Lancamento, LancamentoResponse, LancamentoRequest> {
 
     @Autowired
     private UsuarioService usuarioService;

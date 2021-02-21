@@ -1,6 +1,6 @@
 package br.com.goldhirsch.controller;
 
-import br.com.goldhirsch.adapter.AdapterDTO;
+import br.com.goldhirsch.adapter.Adapter;
 import br.com.goldhirsch.request.LoginFormRequest;
 import br.com.goldhirsch.exception.BadCredentialsException;
 import br.com.goldhirsch.response.AuthenticationResponse;
@@ -44,7 +44,7 @@ public class UsuarioController {
 	AuthenticationManager authManager;
 
 	@Autowired
-	private AdapterDTO<Usuario, AuthenticationResponse, LoginFormRequest> adapter;
+	private Adapter<Usuario, AuthenticationResponse, LoginFormRequest> adapter;
 
 
 	@PostMapping

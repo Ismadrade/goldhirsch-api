@@ -1,6 +1,6 @@
 package br.com.goldhirsch.adapter;
 
-public interface AdapterDTO<Entity, Response, Request> {
+public interface Adapter<Entity, Response, Request> {
     Response toResponse(Entity model);
     Entity ToEntity(Request request);
 }

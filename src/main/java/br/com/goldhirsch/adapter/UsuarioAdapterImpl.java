@@ -6,7 +6,7 @@ import br.com.goldhirsch.response.AuthenticationResponse;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioAdapterDTOImpl implements AdapterDTO<Usuario, AuthenticationResponse, LoginFormRequest> {
+public class UsuarioAdapterImpl implements Adapter<Usuario, AuthenticationResponse, LoginFormRequest> {
 
     @Override
     public Usuario ToEntity(LoginFormRequest loginFormRequest) {
