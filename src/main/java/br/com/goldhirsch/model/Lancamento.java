@@ -15,29 +15,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import br.com.goldhirsch.enums.TipoLancamento;
 
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Lancamento {
-
-	public Lancamento() {
-
-	}
-
-	public Lancamento(Integer id, String descricao, Integer mes, Integer ano, Usuario usuario, BigDecimal valor,
-			LocalDate dataCadastro, TipoLancamento tipo) {
-		super();
-		this.id = id;
-		this.descricao = descricao;
-		this.mes = mes;
-		this.ano = ano;
-		this.usuario = usuario;
-		this.valor = valor;
-		this.dataCadastro = dataCadastro;
-		this.tipo = tipo;
-	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,68 +59,5 @@ public class Lancamento {
 	@Enumerated(value = EnumType.STRING)
 	private TipoLancamento tipo;
 
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public Integer getMes() {
-		return mes;
-	}
-
-	public void setMes(Integer mes) {
-		this.mes = mes;
-	}
-
-	public Integer getAno() {
-		return ano;
-	}
-
-	public void setAno(Integer ano) {
-		this.ano = ano;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
-	}
-
-	public LocalDate getDataCadastro() {
-		return dataCadastro;
-	}
-
-	public void setDataCadastro(LocalDate dataCadastro) {
-		this.dataCadastro = dataCadastro;
-	}
-
-	public TipoLancamento getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoLancamento tipo) {
-		this.tipo = tipo;
-	}
 
 }
