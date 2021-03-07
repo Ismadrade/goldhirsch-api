@@ -7,17 +7,17 @@ import br.com.goldhirsch.model.Lancamento;
 import br.com.goldhirsch.model.Usuario;
 import br.com.goldhirsch.request.LancamentoRequest;
 import br.com.goldhirsch.response.LancamentoResponse;
-import br.com.goldhirsch.service.UsuarioService;
+import br.com.goldhirsch.service.UsuarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
-public class LancamentoAdapterImpl implements Adapter<Lancamento, LancamentoResponse, LancamentoRequest> {
+public class LancamentoAdapter implements Adapter<Lancamento, LancamentoResponse, LancamentoRequest> {
 
     @Autowired
-    private UsuarioService usuarioService;
+    private UsuarioServiceImpl usuarioService;
 
     @Override
     public Lancamento ToEntity(LancamentoRequest request) {

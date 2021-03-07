@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class UsuarioServiceImpl implements UserDetailsService {
 
@@ -40,6 +42,10 @@ public class UsuarioServiceImpl implements UserDetailsService {
         Usuario usuario = repository.findByEmail(email).orElseThrow(() -> new EmailNotFoundException(email));
         return usuario;
 
+    }
+    @Transactional
+    public Optional<Usuario> getUsuarioById(Integer id) {
+        return repository.findById(id);
     }
 
     @Override
