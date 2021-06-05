@@ -8,15 +8,15 @@
 		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<groupId>br.com.goldhirsch</groupId>
-	<artifactId>goldhirsch</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>goldhirsch-api</artifactId>
+	<version>1.0.0</version>
 	<name>goldhirsch</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Pequeno projeto de finanças</description>
 
 	<properties>
-		<java.version>13</java.version>
+		<java.version>15</java.version>
 	</properties>
 	
 	<dependencies>
@@ -27,20 +27,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -53,7 +39,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>	
-			<artifactId>postgresql</artifactId>			
+			<artifactId>postgresql</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -73,14 +59,6 @@
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -110,6 +88,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>goldhirsch</finalName>
 	</build>
 
 </project>

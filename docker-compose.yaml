@@ -1,0 +1,25 @@
+version: '3'
+services:
+  goldhirsch_api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: ismadrade/goldhirsch
+    ports:
+      - '8080:8080'
+      - '5005:5005'
+    environment:
+      - ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      - PROFILE=dev
+    links:
+      - db
+  db:
+    image: postgres:12.7
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=goldhirsch_docker
+      - POSTGRES_USER=postgres
+    volumes:
+    - ./docker/volume_postgres:/var/lib/postgres

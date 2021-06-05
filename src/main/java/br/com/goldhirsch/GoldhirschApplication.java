@@ -9,15 +9,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class GoldhirschApplication extends SpringBootServletInitializer {
+public class GoldhirschApplication {
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GoldhirschApplication.class, args);
-	}
-
-	@Override //sobrescreve para usar wildfly
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder){
-		return super.configure(builder);
 	}
 
 }
